@@ -30,8 +30,12 @@ RUN go install github.com/NVIDIA/mig-parted/cmd/nvidia-mig-parted@latest
 
 FROM nvidia/cuda:12.2.0-devel-ubuntu20.04 AS nvidia_builder
 ARG TARGETARCH
+ARG CI_COMMIT_SHA=unknown
+ARG CI_COMMIT_BRANCH=unknown
+ENV CI_COMMIT_SHA=${CI_COMMIT_SHA}
+ENV CI_COMMIT_BRANCH=${CI_COMMIT_BRANCH}
 RUN apt-get update
-RUN apt-get -y install wget openssl libssl-dev libvulkan-dev git
+RUN apt-get -y install wget openssl libssl-dev libvulkan-dev
 RUN case "${TARGETARCH}" in \
         "amd64") wget https://cmake.org/files/v3.19/cmake-3.19.8-Linux-x86_64.tar.gz ;; \
         "arm64") wget https://cmake.org/files/v3.19/cmake-3.19.8-Linux-aarch64.tar.gz ;; \
