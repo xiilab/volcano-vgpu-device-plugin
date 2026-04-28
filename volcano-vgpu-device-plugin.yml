@@ -200,12 +200,12 @@ spec:
       priorityClassName: "system-node-critical"
       serviceAccount: volcano-device-plugin
       containers:
-      - image: docker.io/projecthami/volcano-vgpu-device-plugin:v1.12.0
+      - image: 10.61.3.124:30002/library/volcano-vgpu-device-plugin:vulkan-v1
         args: ["--device-split-count=10"]
         lifecycle:
           postStart:
             exec:
-              command: ["/bin/sh", "-c", "cp -f /k8s-vgpu/lib/nvidia/* /usr/local/vgpu/"]
+              command: ["/bin/sh", "-c", "cp -rf /k8s-vgpu/lib/nvidia/. /usr/local/vgpu/"]
         name: volcano-device-plugin
         env:
         - name: NODE_NAME
@@ -235,7 +235,7 @@ spec:
           mountPath: /usr/local/vgpu
         - name: hosttmp
           mountPath: /tmp
-      - image: docker.io/projecthami/volcano-vgpu-device-plugin:v1.11.0
+      - image: 10.61.3.124:30002/library/volcano-vgpu-device-plugin:vulkan-v1
         name: monitor
         command:
         - /bin/bash
